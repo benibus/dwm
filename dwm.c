@@ -2992,14 +2992,15 @@ warp(const Arg *arg)
 		return;
 	}
 
-	if (!getrootptr(&x, &y) ||
+	if (!getrootptr(&x, &y) || (y > c->mon->by && y < c->mon->by + bh))
+		return;
+	/* if (!getrootptr(&x, &y) ||
 	    (x > c->x - c->bw &&
 	     y > c->y - c->bw &&
 	     x < c->x + c->w + c->bw*2 &&
 	     y < c->y + c->h + c->bw*2) ||
 	    (y > c->mon->by && y < c->mon->by + bh) ||
-	    (c->mon->topbar && !y))
-		return;
+	    (c->mon->topbar && !y)) */
 
 	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
 }
