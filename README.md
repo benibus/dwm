@@ -10,6 +10,7 @@ Patches
 * bottomstack
 * center
 * deck
+* dwmc
 * gridmode
 * inplacerotate
 * killunsel
