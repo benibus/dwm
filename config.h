@@ -97,7 +97,9 @@ static const char *mpvcmd[] = { "v", "mpv", NULL };
 static const char *addtermcmd[]  = { "t", "st", NULL };
 static const char *addfloatcmd[]  = { "f", "st", "-c", "floating", NULL };
 
+/* additional keysyms */
 #include <X11/XF86keysym.h>
+
 static Key keys[] = {
 	/* MODIFIER             KEY             FUNCTION        ARGUMENT */
 	/* commands */
@@ -223,7 +225,7 @@ static Key keys[] = {
 };
 
 static const char *titlemenu[] = { "mod_menu", NULL };
-static const char *rootmenu[] = { "/home/benibus/.config/xmenu/xmenu.sh", NULL };
+static const char *rootmenu[] = { "xmenu.sh", NULL };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
@@ -250,3 +252,75 @@ static Button buttons[] = {
 	{ ClkStatusText,    MODKEY,     Button3,    sigdwmblocks,   {.i = 8} },
 };
 
+/* dwmc client */
+/* function definitions */
+void
+setlayoutex(const Arg *arg)
+{
+	setlayout(&((Arg) { .v = &layouts[arg->i] }));
+}
+
+void
+viewex(const Arg *arg)
+{
+	view(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+viewall(const Arg *arg)
+{
+	view(&((Arg){.ui = ~0}));
+}
+
+void
+toggleviewex(const Arg *arg)
+{
+	toggleview(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+tagex(const Arg *arg)
+{
+	tag(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+toggletagex(const Arg *arg)
+{
+	toggletag(&((Arg) { .ui = 1 << arg->ui }));
+}
+
+void
+tagall(const Arg *arg)
+{
+	tag(&((Arg){.ui = ~0}));
+}
+
+/* signal definitions */
+/* signum must be greater than 0 */
+/* trigger signals using `xsetroot -name "fsignal:<signame> [<type> <value>]"` */
+static Signal signals[] = {
+	/* signum           function */
+	{ "focusstack",     focusstack },
+	{ "setmfact",       setmfact },
+	{ "togglebar",      togglebar },
+	{ "incnmaster",     incnmaster },
+	{ "togglefloating", togglefloating },
+	{ "focusmon",       focusmon },
+	{ "tagmon",         tagmon },
+	{ "zoom",           zoom },
+	{ "view",           view },
+	{ "viewall",        viewall },
+	{ "viewex",         viewex },
+	{ "toggleview",     view },
+	{ "toggleviewex",   toggleviewex },
+	{ "tag",            tag },
+	{ "tagall",         tagall },
+	{ "tagex",          tagex },
+	{ "toggletag",      tag },
+	{ "toggletagex",    toggletagex },
+	{ "killclient",     killclient },
+	{ "quit",           quit },
+	{ "setlayout",      setlayout },
+	{ "setlayoutex",    setlayoutex },
+};
