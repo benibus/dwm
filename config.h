@@ -186,8 +186,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_q,           quit,           {0} },
 	/* media controls */
 	{ 0,                    XK_Pause,                   spawn,      SHCMD("mpc toggle") },
-	{ 0,                    XF86XK_AudioMute,           spawn,      SHCMD("vol -c 0") },
-	{ 0,                    XF86XK_AudioMute,           spawn,      SHCMD("vol -c 0") },
+	{ 0,                    XF86XK_AudioMute,           spawn,      SHCMD("vol -m") },
 	{ 0,                    XF86XK_AudioLowerVolume,    spawn,      SHCMD("vol -c -5") },
 	{ 0,                    XF86XK_AudioRaiseVolume,    spawn,      SHCMD("vol -c +5") },
 	{ ControlMask,          XF86XK_AudioLowerVolume,    spawn,      SHCMD("vol -c -2") },
