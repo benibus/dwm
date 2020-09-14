@@ -36,12 +36,12 @@ static const Rule rules[] = {
 	 *      WM_NAME(STRING) = title
 	*/
 	/* class            instance        title           tag     center  float   term    swallow monitor scratch */
-	{ "st-256color",    "st-256color",  NULL,           0,      1,      0,      1,      0,      -1,     't' },
+	{ "St",             "st",           NULL,           0,      1,      0,      1,      0,      -1,     't' },
 	{ "floating",       NULL,           NULL,           0,      1,      1,      1,      0,      -1,     'f' },
 	{ "floating-alt",   NULL,           NULL,           0,      0,      1,      1,      0,      0,      'o' },
 	{ "term-scratch",   NULL,           "scratchpad",   0,      1,      1,      1,      1,      -1,     's' },
 	{ "term-scratch",   NULL,           "calculator",   0,      0,      1,      0,      1,      0,      'c' },
-	{ "st-256color",    NULL,           "ncmpcpp",      0,      1,      0,      0,      0,      1,      'm' },
+	{ "St",             NULL,           "ncmpcpp",      0,      1,      0,      0,      0,      1,      'm' },
 	{ "mpv",            NULL,           NULL,           0,      1,      1,      0,      0,      -1,     'v' },
 	{ "Sxiv",           NULL,           NULL,           0,      1,      1,      0,      0,      -1,     0   },
 	{ "Zathura",        NULL,           NULL,           0,      1,      0,      0,      1,      -1,     0   },
