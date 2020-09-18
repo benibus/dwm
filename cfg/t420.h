@@ -48,6 +48,7 @@ static const Rule rules[] = {
 	{ "qBittorrent",    NULL,           NULL,           0,      1,      1,      0,      1,      -1,     0   },
 	{ "Gimp",           NULL,           NULL,           0,      1,      0,      0,      0,      -1,     0   },
 	{ "Nextcloud",      NULL,           NULL,           0,      0,      1,      0,      1,      0,      0   },
+	{ "Chromium",       NULL,           NULL,           1,      0,      0,      0,      -1,     -1,     0   },
 	{ "Firefox",        "Navigator",    NULL,           0,      0,      0,      0,      -1,     -1,     0   },
 	{ "Firefox",        "Browser",      NULL,           0,      1,      1,      0,      -1,     -1,     0   },
 	{ "Firefox",        "Places",       NULL,           0,      1,      1,      0,      -1,     -1,     0   },
@@ -127,13 +128,10 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,   XK_v,           spawn,          SHCMD("yt.sh") },
 	{ MODKEY|ControlMask,   XK_p,           spawn,          SHCMD("passmenu") },
 	{ MODKEY|ControlMask,   XK_slash,       spawn,          SHCMD("emenu") },
-	{ MODKEY|ControlMask,   XK_F9,          spawn,          SHCMD("portage-edit.sh -u") },
-	{ MODKEY|ControlMask,   XK_F10,         spawn,          SHCMD("portage-edit.sh -k") },
-	{ MODKEY|ControlMask,   XK_F11,         spawn,          SHCMD("portage-edit.sh -m") },
-	{ MODKEY|ControlMask,   XK_F12,         spawn,          SHCMD("portage-edit.sh") },
-	{ MODKEY,               XK_grave,       spawn,          SHCMD("clipout") },
+	{ MODKEY,               XK_grave,       spawn,          SHCMD("econfig") },
+	{ MODKEY,               XK_x,           spawn,          SHCMD("clipout") },
 	{ MODKEY,               XK_Insert,      spawn,          SHCMD("mnt &") },
-	{ MODKEY|ControlMask,   XK_Insert,      spawn,          SHCMD("mnt -u &") },
+	{ MODKEY,               XK_Delete,      spawn,          SHCMD("mnt -u &") },
 	/* window controls */
 	{ MODKEY,               XK_Tab,         togglebar,      {0} },
 	{ MODKEY,               XK_a,           togglescratch,  {.v = scratchpadcmd } },
@@ -223,32 +221,31 @@ static Key keys[] = {
 	{ MODKEY|ALTMOD|ControlMask,    XK_r,               spawn,      SHCMD("prompt-shutdown.sh -r") },
 };
 
-static const char *titlemenu[] = { "mod_menu", NULL };
-static const char *rootmenu[] = { "xmenu.sh", NULL };
+static const char *rootmenu[] = { "xmenu-run -r", NULL };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click            event mask  button      function        argument */
-	{ ClkLtSymbol,      0,          Button1,    setlayout,      {0} },
-	{ ClkLtSymbol,      0,          Button3,    setlayout,      {.v = &layouts[2]} },
-	{ ClkClientWin,     MODKEY,     Button1,    movemouse,      {0} },
-	{ ClkClientWin,     MODKEY,     Button2,    togglefloating, {0} },
-	{ ClkClientWin,     MODKEY,     Button3,    resizemouse,    {0} },
-	{ ClkTagBar,        0,          Button1,    view,           {0} },
-	{ ClkTagBar,        0,          Button3,    toggleview,     {0} },
-	{ ClkTagBar,        MODKEY,     Button1,    tag,            {0} },
-	{ ClkTagBar,        MODKEY,     Button2,    toggletag,      {0} },
-	{ ClkWinTitle,      0,          Button2,    zoom,           {0} },
-	{ ClkWinTitle,      0,          Button1,    spawn,          {.v = titlemenu } },
-	{ ClkRootWin,       0,          Button3,    spawn,          {.v = rootmenu } },
-	{ ClkStatusText,    0,          Button1,    sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,    0,          Button2,    sigdwmblocks,   {.i = 2} },
-	{ ClkStatusText,    0,          Button3,    sigdwmblocks,   {.i = 3} },
-	{ ClkStatusText,    0,          Button4,    sigdwmblocks,   {.i = 4} },
-	{ ClkStatusText,    0,          Button5,    sigdwmblocks,   {.i = 5} },
-	{ ClkStatusText,    MODKEY,     Button1,    sigdwmblocks,   {.i = 6} },
-	{ ClkStatusText,    MODKEY,     Button2,    sigdwmblocks,   {.i = 7} },
-	{ ClkStatusText,    MODKEY,     Button3,    sigdwmblocks,   {.i = 8} },
+	/* click            event mask          button      function        argument */
+	{ ClkLtSymbol,      0,                  Button1,    setlayout,      {0} },
+	{ ClkLtSymbol,      0,                  Button3,    setlayout,      {.v = &layouts[2]} },
+	{ ClkClientWin,     MODKEY,             Button1,    movemouse,      {0} },
+	{ ClkClientWin,     MODKEY,             Button2,    togglefloating, {0} },
+	{ ClkClientWin,     MODKEY,             Button3,    resizemouse,    {0} },
+	{ ClkClientWin,     MODKEY|ControlMask, Button3,    killclient,     {0} },
+	{ ClkTagBar,        0,                  Button1,    view,           {0} },
+	{ ClkTagBar,        0,                  Button3,    toggleview,     {0} },
+	{ ClkTagBar,        MODKEY,             Button1,    tag,            {0} },
+	{ ClkTagBar,        MODKEY,             Button2,    toggletag,      {0} },
+	{ ClkWinTitle,      0,                  Button2,    zoom,           {0} },
+	{ ClkRootWin,       0,                  Button3,    spawn,          {.v = rootmenu } },
+	{ ClkStatusText,    0,                  Button1,    sigdwmblocks,   {.i = 1} },
+	{ ClkStatusText,    0,                  Button2,    sigdwmblocks,   {.i = 2} },
+	{ ClkStatusText,    0,                  Button3,    sigdwmblocks,   {.i = 3} },
+	{ ClkStatusText,    0,                  Button4,    sigdwmblocks,   {.i = 4} },
+	{ ClkStatusText,    0,                  Button5,    sigdwmblocks,   {.i = 5} },
+	{ ClkStatusText,    MODKEY,             Button1,    sigdwmblocks,   {.i = 6} },
+	{ ClkStatusText,    MODKEY,             Button2,    sigdwmblocks,   {.i = 7} },
+	{ ClkStatusText,    MODKEY,             Button3,    sigdwmblocks,   {.i = 8} },
 };
 
 /* dwmc client */
