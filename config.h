@@ -45,6 +45,7 @@ static const Rule rules[] = {
 	{ "mpv",            NULL,           NULL,           0,      1,      1,      0,      0,      -1,     'v' },
 	{ "Sxiv",           NULL,           NULL,           0,      1,      1,      0,      0,      -1,     0   },
 	{ "Zathura",        NULL,           NULL,           0,      1,      0,      0,      1,      -1,     0   },
+	{ "tabbed",         NULL,           NULL,           0,      1,      0,      0,      1,      -1,     0   },
 	{ "qBittorrent",    NULL,           NULL,           0,      1,      1,      0,      1,      -1,     0   },
 	{ "Gimp",           NULL,           NULL,           0,      1,      0,      0,      0,      -1,     0   },
 	{ "Nextcloud",      NULL,           NULL,           0,      0,      1,      0,      1,      0,      0   },
@@ -88,6 +89,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *termfloatcmd0[] = { "st", "-c", "floating", "-g", "120x40", NULL };
 static const char *termfloatcmd1[] = { "st", "-c", "floating-alt", "-g", "120x40", NULL };
+static const char *filecmd[] = { "st", "-t", "nnn", "-e", "n3", NULL };
 static const char *htopcmd[] = { "st", "-c", "floating", "-g", "190x45", "-e", "htop", NULL };
 static const char *cointopcmd[] = { "st", "-c", "floating", "-g", "176x44", "-e", "cointop", NULL };
 /* primary scratchpads */
@@ -107,18 +109,18 @@ static Key keys[] = {
 	{ MODKEY,               XK_Return,      spawn,          {.v = termcmd } },
 	{ MODKEY|ALTMOD,        XK_Return,      spawn,          {.v = termfloatcmd0 } },
 	{ MODKEY|ShiftMask,     XK_f,           spawn,          {.v = termfloatcmd1 } },
+	{ MODKEY|ShiftMask,     XK_Return,      spawn,          {.v = filecmd } },
 	{ MODKEY,               XK_semicolon,   spawn,          {.v = dmenucmd } },
 	{ MODKEY,               XK_t,           spawn,          {.v = htopcmd } },
 	{ MODKEY,               XK_r,           spawn,          {.v = cointopcmd } },
-	{ MODKEY|ShiftMask,     XK_Return,      spawn,          SHCMD("st -e $FILE") },
 	{ MODKEY|ALTMOD,        XK_b,           spawn,          SHCMD("$BROWSER") },
-	{ MODKEY|ALTMOD,        XK_r,           spawn,          SHCMD("$READER") },
 	{ MODKEY|ALTMOD,        XK_v,           spawn,          SHCMD("st -e $EDITOR") },
 	{ MODKEY|ALTMOD,        XK_m,           spawn,          SHCMD("st -e neomutt") },
 	{ MODKEY|ALTMOD,        XK_n,           spawn,          SHCMD("st -e newsboat") },
 	{ MODKEY|ALTMOD,        XK_d,           spawn,          SHCMD("st -e podboat") },
 	{ MODKEY|ALTMOD,        XK_t,           spawn,          SHCMD("st -e tmux") },
-	{ MODKEY|ALTMOD,        XK_p,           spawn,          SHCMD("mplayer.sh") },
+	{ MODKEY|ALTMOD,        XK_r,           spawn,          SHCMD("doc-exec") },
+	{ MODKEY|ALTMOD,        XK_p,           spawn,          SHCMD("mpd-client") },
 	{ MODKEY|ALTMOD,        XK_f,           spawn,          SHCMD("libreoffice") },
 	{ MODKEY|ALTMOD,        XK_s,           spawn,          SHCMD("jail tastyworks") },
 	{ MODKEY|ALTMOD,        XK_o,           spawn,          SHCMD("tor-launch.sh") },
@@ -130,6 +132,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,   XK_slash,       spawn,          SHCMD("emenu") },
 	{ MODKEY,               XK_grave,       spawn,          SHCMD("econfig") },
 	{ MODKEY,               XK_x,           spawn,          SHCMD("clipout") },
+	{ MODKEY,               XK_w,           spawn,          SHCMD("blink.sh") },
 	{ MODKEY,               XK_Insert,      spawn,          SHCMD("mnt &") },
 	{ MODKEY,               XK_Delete,      spawn,          SHCMD("mnt -u &") },
 	/* window controls */
