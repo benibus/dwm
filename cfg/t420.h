@@ -18,7 +18,7 @@ static const char col_bg3[]         = "#202425";
 static const char col_fg0[]         = "#B0B9C0";
 static const char col_fg1[]         = "#BCC7CE";
 static const char col_fg2[]         = "#C3CED5";
-static const char col_border[]      = "#757D84";
+static const char col_border[]      = "#666C73";
 
 static const char *colors[][3]      = {
 	/*                fg       bg       border     */
@@ -34,26 +34,26 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *      WM_CLASS(STRING) = instance, class
 	 *      WM_NAME(STRING) = title
-	*/
-	/* class            instance        title           tag     center  float   term    swallow monitor scratch */
-	{ "St",             "st",           NULL,           0,      1,      0,      1,      0,      -1,     't' },
-	{ "floating",       NULL,           NULL,           0,      1,      1,      1,      0,      -1,     'f' },
-	{ "floating-alt",   NULL,           NULL,           0,      0,      1,      1,      0,      0,      'o' },
-	{ "term-scratch",   NULL,           "scratchpad",   0,      1,      1,      1,      1,      -1,     's' },
-	{ "term-scratch",   NULL,           "calculator",   0,      0,      1,      0,      1,      0,      'c' },
-	{ "St",             NULL,           "ncmpcpp",      0,      1,      0,      0,      0,      1,      'm' },
-	{ "mpv",            NULL,           NULL,           0,      1,      1,      0,      0,      -1,     'v' },
-	{ "Sxiv",           NULL,           NULL,           0,      1,      1,      0,      0,      -1,     0   },
-	{ "Zathura",        NULL,           NULL,           0,      1,      0,      0,      1,      -1,     0   },
-	{ "tabbed",         NULL,           NULL,           0,      1,      0,      0,      1,      -1,     0   },
-	{ "qBittorrent",    NULL,           NULL,           0,      1,      1,      0,      1,      -1,     0   },
-	{ "Gimp",           NULL,           NULL,           0,      1,      0,      0,      0,      -1,     0   },
-	{ "Nextcloud",      NULL,           NULL,           0,      0,      1,      0,      1,      0,      0   },
-	{ "Chromium",       NULL,           NULL,           1,      0,      0,      0,      -1,     -1,     0   },
-	{ "Firefox",        "Navigator",    NULL,           0,      0,      0,      0,      -1,     -1,     0   },
-	{ "Firefox",        "Browser",      NULL,           0,      1,      1,      0,      -1,     -1,     0   },
-	{ "Firefox",        "Places",       NULL,           0,      1,      1,      0,      -1,     -1,     0   },
-	{ NULL,             NULL,           "Event Tester", 0,      0,      1,      0,      1,      -1,     0   },
+	**/
+	/* class           instance      title            tag     center  float   term    swallow monitor scratch */
+	{ "St",            "st",         NULL,            0,      1,      0,      1,      0,      -1,     't' },
+	{ "floating",      NULL,         NULL,            0,      1,      1,      1,      0,      -1,     'f' },
+	{ "floating-alt",  NULL,         NULL,            0,      0,      1,      1,      0,      0,      'o' },
+	{ "term-scratch",  NULL,         "scratchpad",    0,      1,      1,      1,      1,      -1,     's' },
+	{ "term-scratch",  NULL,         "calculator",    0,      0,      1,      0,      1,      0,      'c' },
+	{ "St",            NULL,         "ncmpcpp",       0,      1,      0,      0,      0,      1,      'm' },
+	{ "mpv",           NULL,         NULL,            0,      1,      1,      0,      0,      -1,     'v' },
+	{ "Sxiv",          NULL,         NULL,            0,      1,      1,      0,      0,      -1,     0   },
+	{ "Zathura",       NULL,         NULL,            0,      1,      0,      0,      1,      -1,     0   },
+	{ "tabbed",        NULL,         NULL,            0,      1,      0,      0,      1,      -1,     0   },
+	{ "qBittorrent",   NULL,         NULL,            0,      1,      1,      0,      1,      -1,     0   },
+	{ "Gimp",          NULL,         NULL,            0,      1,      0,      0,      0,      -1,     0   },
+	{ "Nextcloud",     NULL,         NULL,            0,      0,      1,      0,      1,      0,      0   },
+	{ "Chromium",      NULL,         NULL,            1,      0,      0,      0,      -1,     -1,     0   },
+	{ "Firefox",       "Navigator",  NULL,            0,      0,      0,      0,      -1,     -1,     0   },
+	{ "Firefox",       "Browser",    NULL,            0,      1,      1,      0,      -1,     -1,     0   },
+	{ "Firefox",       "Places",     NULL,            0,      1,      1,      0,      -1,     -1,     0   },
+	{ NULL,            NULL,         "Event Tester",  0,      0,      1,      0,      1,      -1,     0   },
 };
 
 /* layout(s) */
@@ -85,20 +85,29 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "1"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg0, "-nf", col_fg0, "-sb", col_bg3, "-sf", col_fg1, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = {
+	"dmenu_run",
+	"-m",  dmenumon,
+	"-fn", dmenufont,
+	"-nb", col_bg0,
+	"-nf", col_fg0,
+	"-sb", col_bg3,
+	"-sf", col_fg1,
+	NULL
+};
+static const char *termcmd[]       = { "st", NULL };
 static const char *termfloatcmd0[] = { "st", "-c", "floating", "-g", "120x40", NULL };
 static const char *termfloatcmd1[] = { "st", "-c", "floating-alt", "-g", "120x40", NULL };
-static const char *filecmd[] = { "st", "-t", "nnn", "-e", "n3", NULL };
-static const char *htopcmd[] = { "st", "-c", "floating", "-g", "190x45", "-e", "htop", NULL };
-static const char *cointopcmd[] = { "st", "-c", "floating", "-g", "176x44", "-e", "cointop", NULL };
+static const char *filecmd[]       = { "st", "-t", "nnn", "-e", "n3", NULL };
+static const char *htopcmd[]       = { "st", "-c", "floating", "-g", "190x45", "-e", "htop", NULL };
+static const char *cointopcmd[]    = { "st", "-c", "floating", "-g", "176x44", "-e", "cointop", NULL };
 /* primary scratchpads */
 static const char *scratchpadcmd[] = { "s", "st", "-t", "scratchpad", "-c", "term-scratch", "-g", "135x40", NULL };
 static const char *calculatorcmd[] = { "c", "calc.sh", NULL };
-static const char *mpvcmd[] = { "v", "mpv", NULL };
+static const char *mpvcmd[]        = { "v", "mpv", NULL };
 /* vacant scratchpads */
-static const char *addtermcmd[]  = { "t", "st", NULL };
-static const char *addfloatcmd[]  = { "f", "st", "-c", "floating", NULL };
+static const char *addtermcmd[]    = { "t", "st", NULL };
+static const char *addfloatcmd[]   = { "f", "st", "-c", "floating", NULL };
 
 /* additional keysyms */
 #include <X11/XF86keysym.h>
@@ -136,7 +145,7 @@ static Key keys[] = {
 	{ MODKEY,               XK_Insert,      spawn,          SHCMD("mnt &") },
 	{ MODKEY,               XK_Delete,      spawn,          SHCMD("mnt -u &") },
 	/* window controls */
-	{ MODKEY,               XK_Tab,         togglebar,      {0} },
+	{ MODKEY,               XK_b,           togglebar,      {0} },
 	{ MODKEY,               XK_a,           togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,               XK_c,           togglescratch,  {.v = calculatorcmd } },
 	{ MODKEY,               XK_v,           togglescratch,  {.v = mpvcmd } },
@@ -154,7 +163,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_minus,       incnmaster,     {.i = -1 } },
 	{ MODKEY|ControlMask,   XK_space,       zoom,           {0} },
 	{ MODKEY,               XK_apostrophe,  view,           {0} },
-	{ MODKEY,               XK_b,           warp,           {0} },
+	{ MODKEY,               XK_z,           warp,           {0} },
 	{ MODKEY,               XK_q,           killclient,     {0} },
 	{ MODKEY|ShiftMask,     XK_b,           killclient,     {0} },
 	{ MODKEY|ShiftMask,     XK_Escape,      killunsel,      {0} },
